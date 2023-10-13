@@ -1,0 +1,58 @@
+html {
+    height: 100%;
+    width: 100%;
+  }
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.profile-card {
+    width: 800px; /* profile page card */
+    height: 1000px;
+}
+.Banner{ /*info page card*/
+    text-align: center;
+    padding-top: 100px;
+}
+.info1{ /*lounge header*/
+    text-align: center;
+    padding-top: 70px;
+}
+.info2{/*lounge info*/
+    text-align: center;
+    padding-top: 20px;
+    font-size: 20px;
+}
+.image{ /*info images */
+    max-width: 50%; 
+    height: auto; 
+    margin-right: 20px;
+    float: left;
+}
+.image-container_L, .image-container_R{ /* the container for the image and text*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 20px;
+}
+.game_text{
+    padding-top: 100px;
+    align-items: center;
+    justify-content: center;
+}
+
+.image_R {
+    max-width: 50%;
+    height: auto;
+}
+.game_name{
+    text-align: center;
+}
+
+#game-list {
+    padding: 10px;
+    margin: 10px 0;
+}
