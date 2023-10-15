@@ -16,7 +16,7 @@ app.use(session({
     saveUninitialized: true
 }))
 
-
+// example
 const saltRounds = 10;
 
 function isAuthenticated(req, res, next)
