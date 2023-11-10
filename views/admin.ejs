@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg  navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Welcome</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-mdb-toggle="collapse"
+            data-mdb-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse-navbar-collapse" id="navbarNavAltMarkup" >
+            <div class="navbar-nav" class="ml-auto">
+              <a class="nav-link active" aria-current="page" href="/info">Home</a>
+              <a class="nav-link" href="/profile">Profile</a>
+              <a class="nav-link" href="/logout">Sign Out</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <header>
+        <h1 class="Banner">
+         Admin Page</h1>
+      </header>
+
+      <div>
+        <h3 class= info1>
+            Edit Lounge Info 
+          </h3>
+
+          <form method="POST" action="/admin">
+            <label for="price">Price:</label>
+            <input type="text" name="price" id="price" required>
+            
+            <label for="hours">Hours:</label>
+            <input type="text" name="hours" id="hours" required>
+            
+            <label for="cod">COD:</label>
+            <input type="text" name="cod" id="cod" required>
+            
+            <button type="submit">Update Info</button>
+
+            <% if (successMessage) { %>
+                <div class="success-message">
+                    <p><%= successMessage %></p>
+                </div>
+            <% } %>
+        </form>
+        <br> 
+        <br> 
+        <form method="POST" action="/admin/addGame">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+    
+            <label for="desc">Description:</label>
+            <textarea id="desc" name="desc" required></textarea><br>
+    
+            <label for="img">Image URL:</label>
+            <input type="text" id="img" name="img" required><br>
+    
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre" required><br>
+    
+            <button type="submit">Add Game</button>
+            <% if (successMessage) { %>
+                <div class="success-message">
+                    <p><%= successMessage %></p>
+                </div>
+            <% } %>
+        </form>
+        <br>
+        <br> 
+        <form action="/admin/delete-game" method="post">
+            <label for="gameName">Game Name to Delete:</label>
+            <input type="text" id="gameName" name="gameName" required>
+            <button type="submit">Delete Game</button>
+        </form>
+        <br> 
+        <br> 
+        <h2>Popular Game Suggestions</h2>
+        <ul>
+            <% popularSuggestions.forEach(suggestion => { %>
+                <li><%= suggestion.game_name %> (Suggested <%= suggestion.suggestion_count %> times)</li>
+            <% }); %>
+        </ul>
+
+      </div>
+    
+    
+</body>
+</html>

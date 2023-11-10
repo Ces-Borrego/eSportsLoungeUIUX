@@ -47,6 +47,12 @@
                                         Passwords do not match
                                     </p>
                                 <% } %>
+                                <% if (typeof emailExistsError !== "undefined" && emailExistsError) { %>
+                                    <p class="error"  style="color: red;">
+                                        PEmail address is already in use. Please use a different email.
+                                    </p>
+                                    
+                                <% } %>
 
                                 <button type="submit" class="btn btn-success btn-block">Sign Up</button>
                             </form>
