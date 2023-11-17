@@ -26,17 +26,10 @@ html {
     font-size: 20px;
 }
 .image{ /*info images */
-    max-width: 50%; 
-    height: auto; 
-    margin-right: 20px;
-    float: left;
-}
-.image-container_L, .image-container_R{ /* the container for the image and text*/
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
-    padding: 20px;
+    max-width: 45%; /* Adjust this as needed */
+    height: auto;
+    border-radius: 10px;
+    
 }
 .game_text{
     padding-top: 100px;
@@ -44,15 +37,133 @@ html {
     justify-content: center;
 }
 
-.image_R {
-    max-width: 50%;
-    height: auto;
-}
 .game_name{
     text-align: center;
 }
 
 #game-list {
-    padding: 10px;
-    margin: 10px 0;
+    list-style: none;
+    padding: 0;
+    padding-top: 100px;
+    
+}
+.game-item {
+    padding-top: 100px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin:-35px;
+    
+}
+.even .image {
+    order: 1; /* Set the image to appear on the left */
+}
+
+.even .text {
+    order: 2; /* Set the text to appear on the right */
+}
+
+/* Style for odd items (image on the right, text on the left) */
+.odd .image {
+    order: 2; /* Set the image to appear on the right */
+}
+
+.odd .text {
+    order: 1; /* Set the text to appear on the left */
+}
+.text {
+    flex: 1; /* Takes up remaining space on the right */
+    text-align: center;
+    
+}
+.image{ /*info images */
+    max-width: 45%; /* Adjust this as needed */
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.suggestion-box {
+    text-align: center; /* Center horizontally */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Center vertically using viewport height (adjust as needed) */
+    /* You can also add more styling as needed */
+}
+
+.suggestion{
+    margin-bottom: 10px;
+}
+#welcome{
+    color: rgb(51, 51, 180);
+    font-size: 18px; /* Adjust the font size as needed */
+    font-weight: bold; 
+}
+#passwordLabel{
+    color: rgb(51, 51, 180);
+}
+#emailLabel{
+    color: rgb(51, 51, 180);
+}
+
+#loginCard {
+    border-radius: 25px; /* Adjust the value to control the roundness of the corners */
+    background-color: rgba(255, 255, 255, 0.9); /* Transparent white (adjust the alpha value) */
+    padding: 20px; /* Adjust the padding as needed */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a raised effect */
+}
+#Logininfolink{
+    color: rgb(51, 51, 180);
+    font-size: 16px; /* Adjust the font size as needed */
+    font-weight: bold; 
+}
+#LoginSignup{
+    color: rgb(51, 51, 180);
+    font-size: 16px; /* Adjust the font size as needed */
+    font-weight: bold; 
+}
+.custom_button_container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */ 
+    min-height: 50px; /* Set the minimum height to 200 pixels (adjust as needed) */
+    text-align: center; /* Center the content horizontally */
+    padding: 10px; /
+    
+}
+#LoginLogo {
+    max-width: 50px; /* Adjust the width of your logo */
+    margin-right: 30%; /* Add margin to create space between the logo and button */
+}
+#loginImage{
+    max-width: 900%;
+}
+.custom_button {
+    background-color: white;
+    border: 2px solid rgb(51, 51, 180);;
+    color: rgb(51, 51, 180);
+    transition: background-color 0.3s, color 0.3s;
+    padding: 10px 20px; /* Add padding to make the button more visible */
+    width: auto; /* Allow the button's width to adjust to content */
+    min-width: 150px; /* Set a minimum width (adjust as needed) */
+    display: inline-block; /* Make the button an inline-block element */
+    text-align: center; /* Center the text horizontally */
+    line-height: 1.5; 
+    border-radius: 15px;
+    margin-right:33% ;
+    font-weight: bold;
+}
+
+.custom_button:hover {
+    background-color: rgb(51, 51, 180);;
+    color: white;
+}
+#loginPage{
+
+    background-image: url('https://cdn.autonomous.ai/static/upload/images/new_post/10-cool-gaming-room-color-schemes-3485-1638683230131.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    
 }
