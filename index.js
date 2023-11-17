@@ -209,7 +209,6 @@ app.get('/info', isAuthenticated , async(req, res) => {
     // Define a variable and set it to "hello"
 
     const userName = req.session.username;
-    console.log(userName);
 
     let sql = 'SELECT * FROM Info';
     let infoData = await executeSQL(sql);
@@ -222,14 +221,19 @@ app.get('/info', isAuthenticated , async(req, res) => {
 
 });
 app.post('/info', isAuthenticated , async(req, res) => {
-    let suggestion = req.body.gameSuggestion; 
-    
-    let sql = 'INSERT INTO suggestions (game_name) VALUES (?)'
+    let suggestion = req.body.gameSuggestion;
 
+    // Check if the suggestion is not blank or only contains whitespace
+    if (suggestion.trim() === '') {
+        // Handle the case where the suggestion is blank
+        return res.redirect('/info');
+    }
+
+    let sql = 'INSERT INTO suggestions (game_name) VALUES (?)';
     let params = [suggestion];
 
     executeSQL(sql, params);
-   
+
     res.redirect('/info');
 });
 

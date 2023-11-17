@@ -15,6 +15,8 @@ html {
 .Banner{ /*info page card*/
     text-align: center;
     padding-top: 100px;
+    color: rgb(0,42,78);
+    font: bold; 
 }
 .info1{ /*lounge header*/
     text-align: center;
@@ -97,15 +99,15 @@ html {
     margin-bottom: 10px;
 }
 #welcome{
-    color: rgb(51, 51, 180);
+    color: rgb(0,42,78);
     font-size: 18px; /* Adjust the font size as needed */
     font-weight: bold; 
 }
 #passwordLabel{
-    color: rgb(51, 51, 180);
+    color: rgb(0,42,78);
 }
 #emailLabel{
-    color: rgb(51, 51, 180);
+    color: rgb(0,42,78);
 }
 
 #loginCard {
@@ -115,12 +117,12 @@ html {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a raised effect */
 }
 #Logininfolink{
-    color: rgb(51, 51, 180);
+    color: rgb(0,42,78);
     font-size: 16px; /* Adjust the font size as needed */
     font-weight: bold; 
 }
 #LoginSignup{
-    color: rgb(51, 51, 180);
+    color: rgb(0,42,78);
     font-size: 16px; /* Adjust the font size as needed */
     font-weight: bold; 
 }
@@ -142,8 +144,8 @@ html {
 }
 .custom_button {
     background-color: white;
-    border: 2px solid rgb(51, 51, 180);;
-    color: rgb(51, 51, 180);
+    border: 2px solid rgb(0,42,78);
+    color: rgb(0,42,78);
     transition: background-color 0.3s, color 0.3s;
     padding: 10px 20px; /* Add padding to make the button more visible */
     width: auto; /* Allow the button's width to adjust to content */
@@ -157,13 +159,170 @@ html {
 }
 
 .custom_button:hover {
-    background-color: rgb(51, 51, 180);;
+    background-color: rgb(0,42,78);
     color: white;
 }
-#loginPage{
+.loginPage{
 
     background-image: url('https://cdn.autonomous.ai/static/upload/images/new_post/10-cool-gaming-room-color-schemes-3485-1638683230131.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     
 }
+.custom_button2 {
+    background-color: rgb(0,42,78);
+    border: 2px solid rgb(0,42,78);
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 10px 20px; /* Add padding to make the button more visible */
+    width: auto; /* Allow the button's width to adjust to content */
+    min-width: 110px; /* Set a minimum width (adjust as needed) */
+    display: inline-block; /* Make the button an inline-block element */
+    text-align: center; /* Center the text horizontally */
+    line-height: .5; 
+    border-radius: 15px;
+    margin-right:5% ;
+    font-weight: bold;
+}
+
+.custom_button2:hover {
+    background-color: white;
+    color: rgb(0,42,78);
+    
+}
+.Infoback{
+    background-color: rgb(244,242,239);
+}
+.bannerImage{
+    display: flex;
+    justify-content: center;
+    height: 250px; /* Set a fixed height for the container */ 
+}
+.centered-image{
+    width: 90%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.infoText{
+    color: rgb(0,42,78);
+    font-weight: bold; 
+}
+.suggestion{
+    width: 50%;
+    height: 10vh; 
+   
+}
+#suggestButton{
+    background-color: rgb(0,42,78);
+    border: 2px solid rgb(0,42,78);
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 10px 20px; /* Add padding to make the button more visible */
+    width: auto; /* Allow the button's width to adjust to content */
+    min-width: 150px; /* Set a minimum width (adjust as needed) */
+    text-align: center; /* Center the text horizontally */
+    line-height: 1.5; 
+    border-radius: 15px;
+    margin-right:33% ;
+    font-weight: bold;
+    display: block; /* Ensure the button is a block element */
+    margin: 0 auto; /* Set left and right margins to 'auto' to center horizontally */
+}
+#suggestButton:hover {
+    background-color: white; /* Change to the desired hover background color */
+    color: rgb(0,42,78); /* Change to the desired hover text color */
+}
+.games-image{
+    max-width: 50%; /* Adjust this value to make the images smaller as needed */
+    max-height: auto; /* Maintain the original aspect ratio */
+}
+#gameCarousel .item{
+    text-align:center;
+    height: 100%;
+    padding-bottom: 80px;
+}
+#gameCarousel .item img{
+    max-width: 100%; 
+    border-radius: 15px;
+    border: 2px solid rgb(0, 42, 78); /* Add a border here */
+    
+}
+#gameCarousel .item h2{
+    font-size: 18px;
+    color: rgb(0,42,78);
+}
+#gameCarousel .item p{
+    font-size: 14px;
+    color: rgb(0,42,78);
+}
+.custom-nav {
+    text-align: center;
+    margin-top: 10px;
+    position: relative;
+}
+
+.custom-nav button {
+    background-color: rgb(0,42,78);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.custom-nav button:hover {
+    background-color: #0050b2;
+}
+.custom-prev,
+.custom-next {
+    background-color: #007cff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color 0.3s;
+}
+
+.custom-prev {
+    left: 20px; /* Adjust the distance from the left edge */
+}
+
+.custom-next {
+    right: 20px; /* Adjust the distance from the right edge */
+}
+.custom-prev:hover,
+.custom-next:hover {
+    background-color: #0050b2;
+}
+#suggestionText{
+    color: rgb(0,42,78);
+}
+.custom-negative-margin {
+    /* for the welcome in the nav bar */
+    margin-left: -60%; /* Default negative margin for larger screens */
+
+    /* Media query for screens with a maximum width of 768px */
+    @media (max-width: 768px) {
+        margin-left: -20%; /* Adjust the negative margin for smaller screens */
+    }
+    
+}
+.label-blue {
+    color: rgb(0,42,78);
+}
+#SignupCard{
+    border-radius: 25px; /* Adjust the value to control the roundness of the corners */
+    background-color: rgba(255, 255, 255, 0.9); /* Transparent white (adjust the alpha value) */
+    padding: 20px; /* Adjust the padding as needed */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a raised effect */
+}
+
+
+
+
+  
