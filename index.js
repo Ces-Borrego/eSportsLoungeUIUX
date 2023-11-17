@@ -68,6 +68,8 @@ app.post('/', async (req, res) => {
     
    
     if (passwordMatch && rows[0].admin == 0) {
+        //run timeTracking.py in "/scripts/timeTracking.py" CESAR
+        
         req.session.authenticated = true; 
         req.session.username = rows[0].username;
         res.redirect("info");
