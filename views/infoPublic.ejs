@@ -3,16 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Page</title>
+    <title>Information</title>
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 
 </head>
-<body>
+<body class="Infoback">
     <nav class="navbar navbar-expand-lg  navbar-light bg-light fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Welcome</a>
+          <a class="navbar-brand" href="#">
+            <img src="https://csumb.edu/media/csumb/section-editors/student-life/u2cMPUw0T8CtOxATwqaj_CSUMB-Round-Logo-for-Licensing-18-blue.png" 
+            alt="Your Logo" style="max-width: 40px;">
+          </a>
           <button
             class="navbar-toggler"
             type="button"
@@ -26,36 +33,42 @@
           </button>
           <div class="collapse-navbar-collapse" id="navbarNavAltMarkup" >
             <div class="navbar-nav" class="ml-auto">
-              <a class="nav-link" href="/">Login</a>
+              <a class="custom_button2" href="/">Login</a>
             </div>
           </div>
         </div>
       </nav>
-      <br> 
-      <br> 
+    <br>
     <header>
       <h1 class="Banner">
-        Esports Lounge</h1>
+        Otter Esport Lounge Information</h1>
     </header>
+    <br>
     <div>
-        <h3 class= info1>
-          Lounge Info 
-        </h3>
+      <div class="bannerImage">
+        <img src="https://www.uco.edu/student-life/images/pc-gaming.jpg" alt="Your Image" class="centered-image">
+      </div>
+        <br> 
         <div class = info2>
           <p>
            
             <br>
-            
             <% infoData.forEach(function(infoItem) { %>
-              <p><strong>Price:</strong> <%= infoItem.price %></p>
+              <p class= "infoText"><strong>Code of Conduct:</strong> <%= infoItem.cod %></p>
           <% }); %>
+          <br> 
             <% infoData.forEach(function(infoItem) { %>
-              <p><strong>Hours:</strong> <%= infoItem.hours %></p>
+              <p class= "infoText"><strong>Hours:</strong> <%= infoItem.hours %></p>
           <% }); %>
-
-        </div>
+          <br>
+            <% infoData.forEach(function(infoItem) { %>
+              <p class= "infoText"><strong>Price:</strong> <%= infoItem.price %></p>
+          <% }); %>
+          </div>
+        <h1 class="Banner">
+          Games</h1>
         
-        <div>
+        <!-- <div>
 
           <ul class="game-list">
             <% gameData.forEach(function(game,i) { %>
@@ -69,29 +82,57 @@
             <% }); %>
         </ul>
 
-        </div>
-        <br>
-        <br>
-        <form method="POST">
-          <div class="suggestion-box">
-            <h3>Suggest a Game</h3>
-            <input type="text" id="gameSuggestion" name="gameSuggestion" placeholder="Suggest a Game" class = "suggestion" maxlength="50">
-            <button class="btn btn-primary" id="suggestButton">Submit Suggestion</button>
-          </div>
-          <br>
-          <br>
-        </form>
-        <div class= "info2">
-            <% infoData.forEach(function(infoItem) { %>
-              <p><strong>Code of conduct:</strong> <%= infoItem.cod %></p>
+        </div> -->
+        <br> 
+        
+        <div id="gameCarousel" class="owl-carousel">
+          <% gameData.forEach(function(game, i) { %>
+            <div class="item">
+              <img src="<%= game.img %>" alt="<%= game.name %>" class="games-image">
+              <div class="carousel-caption">
+                <h2><%= game.name %></h2>
+                <!-- <p><%= game.desc %></p> -->
+              </div>
+            </div>
           <% }); %>
         </div>
+        <div class="custom-nav">
+          <button class="custom-prev">Previous</button>
+          <button class="custom-next">Next</button>
+        </div>
+        
+        <br>
+        <br> 
 
         
     </div>
     
     <footer>
-        <p>&copy; 2023 My Website</p>
+        <p>&copy; Csumb </p>
     </footer>
+    <script>
+      $(document).ready(function(){
+        
+        var $gameCarousel = $("#gameCarousel");
+        var $customPrev = $(".custom-prev");
+        var $customNext = $(".custom-next");
+
+        $gameCarousel.owlCarousel({
+            items: 3, // Number of items to show at once
+            loop: true, // Infinite loop
+            margin: 10, // Spacing between items
+        });
+
+        $customPrev.on("click", function () {
+            $gameCarousel.trigger("prev.owl.carousel");
+        });
+
+        $customNext.on("click", function () {
+            $gameCarousel.trigger("next.owl.carousel");
+        });
+            
+      });
+      
+    </script>
 </body>
 </html>

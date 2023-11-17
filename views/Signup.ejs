@@ -3,38 +3,64 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign Up</title>
+	<!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-<body>
+<body class="loginPage">
+    <nav class="navbar navbar-expand-lg  navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+			<a class="navbar-brand" href="#">
+				<img src="https://csumb.edu/media/csumb/section-editors/student-life/u2cMPUw0T8CtOxATwqaj_CSUMB-Round-Logo-for-Licensing-18-blue.png" 
+				alt="Your Logo" style="max-width: 40px;">
+			</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-mdb-toggle="collapse"
+            data-mdb-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup"></div>
+            <div class="navbar-nav" class="ml-auto">
+			    <a class="custom_button2" href="/">Login</a>
+			  
+            </div>
+          </div>
+        </div>
+      </nav>
+      <br> 
     <form method="POST">
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card" id="SignupCard">
                         <div class="card-header">
-                            <h2 class="text-center">Sign Up</h2>
+                            <h4 class="text-center" id="welcome">Welcome to the Otter Esport Lounge!</h4>
                         </div>
                         <div class="card-body">
                             <form action="/SignUp" method="post">
                                 <div class="form-group">
-                                    <label for="username">Username:</label>
+                                    <label for="username" class="label-blue" >Username:</label>
                                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email:</label>
+                                    <label for="email" class="label-blue">Email:</label>
                                     <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password">Password:</label>
+                                    <label for="password" class="label-blue">Password:</label>
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirmPassword">Confirm Password:</label>
+                                    <label for="confirmPassword" class="label-blue">Confirm Password:</label>
                                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
                                 </div>
                                 <% if (typeof emailError !== "undefined" && emailError) { %>
@@ -54,7 +80,12 @@
                                     
                                 <% } %>
 
-                                <button type="submit" class="btn btn-success btn-block">Sign Up</button>
+                                <div class="custom_button_container">
+                                    <div id="LoginLogo">
+                                        <img id="loginImage" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/55ee0748300481.56082b3617893.png" alt="Your Logo">
+                                    </div>
+                                    <button type="submit" class="custom_button">Sign Up</button>
+                                </div>
                             </form>
                     
                         </div>
