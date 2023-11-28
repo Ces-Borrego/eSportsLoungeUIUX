@@ -6,6 +6,8 @@ const session = require('express-session');
 const pool = dbConnection(); 
 const path = require('path');
 
+const { startTracking, stopTracking } = require('./scripts/timeTracking.js');
+
 app.use(express.static(path.join(__dirname, 'css')));
 app.set('views', path.join(__dirname, 'views'));
 
@@ -41,6 +43,19 @@ function isAdmin(req, res, next) {
     }
 }
 
+async function getGames() {
+    const sql = 'SELECT executable FROM game';
+    try{
+        const games = await executeSQL(sql);
+        // console.log(Object.values(games).map(game => game.executable));
+        return Object.values(games); //return array of executable names to monitor
+    } catch (error) {
+        console.error('Error retrieving games:', error);
+        console.log('Error retrieving games:')
+        throw error;
+    }
+}
+
 
 //routes
 app.use(express.urlencoded({extended: true}));
@@ -70,7 +85,10 @@ app.post('/', async (req, res) => {
    
     if (passwordMatch && rows[0].admin == 0) {
         //run timeTracking.py in "/scripts/timeTracking.py" CESAR
-        
+        const gamesToMonitor = await getGames();
+        startTracking(gamesToMonitor.map(game => game.executable));
+        // console.log('Games to monitor:', gamesToMonitor);
+
         req.session.authenticated = true; 
         req.session.username = rows[0].username;
         res.redirect("info");
@@ -258,7 +276,7 @@ app.get('/profile', isAuthenticated ,(req, res) => {
 
 
 app.get('/logout', isAuthenticated ,(req, res) => {
-
+    stopTracking();
     req.session.destroy(); 
     res.redirect("/"); 
 
