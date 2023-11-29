@@ -6,7 +6,10 @@ const session = require('express-session');
 const pool = dbConnection(); 
 const path = require('path');
 
+const { startTracking, stopTracking } = require('./scripts/timeTracking.js');
+
 app.use(express.static(path.join(__dirname, 'css')));
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'images')));
 
@@ -42,6 +45,19 @@ function isAdmin(req, res, next) {
     }
 }
 
+async function getGames() {
+    const sql = 'SELECT executable FROM game';
+    try{
+        const games = await executeSQL(sql);
+        // console.log(Object.values(games).map(game => game.executable));
+        return Object.values(games); //return array of executable names to monitor
+    } catch (error) {
+        console.error('Error retrieving games:', error);
+        console.log('Error retrieving games:')
+        throw error;
+    }
+}
+
 
 //routes
 app.use(express.urlencoded({extended: true}));
@@ -70,6 +86,11 @@ app.post('/', async (req, res) => {
     
    
     if (passwordMatch && rows[0].admin == 0) {
+        //run timeTracking.py in "/scripts/timeTracking.py" CESAR
+        const gamesToMonitor = await getGames();
+        startTracking(gamesToMonitor.map(game => game.executable));
+        // console.log('Games to monitor:', gamesToMonitor);
+
         req.session.authenticated = true; 
         req.session.username = rows[0].username;
         req.session.userId = rows[0].userId;
@@ -315,7 +336,43 @@ app.get('/profile', isAuthenticated ,async(req, res) => {
 
 
 
-app.get('/logout', isAuthenticated ,(req, res) => {
+app.get('/logout', isAuthenticated , async (req, res) => {
+    const gameInteractions = stopTracking(); // Get game interactions
+    const username = req.session.username; // Get the username from the session
+
+    // Query to get the userID from the database using the username
+    const userSql = 'SELECT userID FROM users WHERE username = ?';
+    const userRows = await executeSQL(userSql, [username]);
+
+    if (userRows && userRows.length > 0) {
+        const userID = userRows[0].userID;
+
+        const dateTime = new Date().toISOString().replace('T', ' ').substring(0, 19); // Get the current date and time
+        
+        for (const interaction of gameInteractions) {
+            try {
+                // Find the gameID based on the executable
+                const gameSql = 'SELECT gameID FROM game WHERE executable = ?';
+                const gameRows = await executeSQL(gameSql, [interaction.executable]);
+                if (gameRows && gameRows.length > 0 && gameRows[0].gameID) {
+                    const gameID = gameRows[0].gameID;
+                    console.log('Game ID:', gameID, 'for executable:', interaction.executable);
+    
+                    // Insert into game_interactions
+                    const insertSql = 'INSERT INTO game_interaction (playtime, date, gameID, userID) VALUES (?, ?, ?, ?)';
+                    await executeSQL(insertSql, [interaction.playtime, dateTime, gameID, userID]);
+                    console.log('Inserted game interaction:', interaction, 'for user ID:', userID, 'at:', dateTime);
+                } else {
+                    console.error(`No gameID found for executable: ${interaction.executable}`);
+                    // Handle the case where no gameID was found
+                }
+            } catch (error) {
+                console.error('Error processing game interaction for:', interaction.executable.toString(), error);
+            }
+        }
+    } else {
+        console.error('No user found with username:', username);
+    }
 
     req.session.destroy(); 
     res.redirect("/"); 
