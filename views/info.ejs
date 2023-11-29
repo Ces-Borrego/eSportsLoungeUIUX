@@ -35,8 +35,12 @@
         </button>
         <div class="collapse-navbar-collapse" id="navbarNavAltMarkup" >
             <div class="navbar-nav ml-auto">
-                <a class="custom_button2" href="/profile">Profile</a>
-                <a class="custom_button2" href="/logout">Sign Out</a>
+              <% if (isAdmin) { %>
+                <a class="custom_button2" href="/admin">Admin</a>
+              <% } else { %>
+                  <a class="custom_button2" href="/profile">Profile</a>
+              <% } %>
+              <a class="custom_button2" href="/logout">Sign Out</a>
             </div>
         </div>
     </div>
@@ -49,7 +53,7 @@
     <br> 
     <div>
         <div class="bannerImage">
-          <img src="https://www.uco.edu/student-life/images/pc-gaming.jpg" alt="Your Image" class="centered-image">
+          <img src="/Bannerimg1.jpg" alt="Your Image" class="centered-image">
         </div>
         <br> 
         <div class = info2>

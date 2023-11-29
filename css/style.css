@@ -20,7 +20,9 @@ html {
 }
 .info1{ /*lounge header*/
     text-align: center;
-    padding-top: 70px;
+    padding-top: 2%;
+    color:rgb(0,42,78);
+    padding-bottom: 2%;
 }
 .info2{/*lounge info*/
     text-align: center;
@@ -115,6 +117,7 @@ html {
     background-color: rgba(255, 255, 255, 0.9); /* Transparent white (adjust the alpha value) */
     padding: 20px; /* Adjust the padding as needed */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a raised effect */
+    padding-top: 10%;
 }
 #Logininfolink{
     color: rgb(0,42,78);
@@ -164,7 +167,7 @@ html {
 }
 .loginPage{
 
-    background-image: url('https://cdn.autonomous.ai/static/upload/images/new_post/10-cool-gaming-room-color-schemes-3485-1638683230131.jpg');
+    background-image: url('/Backimg2.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     
@@ -295,6 +298,7 @@ html {
 .custom-next {
     right: 20px; /* Adjust the distance from the right edge */
 }
+
 .custom-prev:hover,
 .custom-next:hover {
     background-color: #0050b2;
@@ -321,8 +325,101 @@ html {
     padding: 20px; /* Adjust the padding as needed */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a raised effect */
 }
+#P_username{
+    padding-left: 13.5%;
+    padding-top: 5%;
+    padding-bottom: 0%;
+    color: rgb(0,42,78);;
+}
+.totaltimeplayed{
+    padding-left: 20%;
+    padding-top: 8%;
+    color: rgb(0,42,78);
+    
+}
+.MostPlayedGame{
+    padding-left: 20%;
+    padding-top: 1%;
+    color: rgb(0,42,78);
 
+}
+.profile_games_text{
+    color: rgb(0,42,78);
+}
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+.submit_info{
+    background-color: rgb(0,42,78);
+    border: 2px solid rgb(0,42,78);
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 10px 20px; /* Add padding to make the button more visible */
+    width: auto; /* Allow the button's width to adjust to content */
+    min-width: 150px; /* Set a minimum width (adjust as needed) */
+    text-align: center; /* Center the text horizontally */
+    line-height: 1.5; 
+    border-radius: 15px;;
+    font-weight: bold;
+    display: block; /* Ensure the button is a block element */
+    margin: 0 auto; /* Set left and right margins to 'auto' to center horizontally */
+    
+}
+.sumbit_info:hover {
+    background-color: white; /* Change to the desired hover background color */
+    color: rgb(0,42,78); /* Change to the desired hover text color */
+}
+.success-message_update_info {
+    text-align: center; /* Center the text */
+    color: green; /* Set the text color to green */
+    margin-top: 10px; /* Add some margin for spacing */
+}
+.admin_text{
+    color: rgb(0,42,78);
+}
+.form-wrapper1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10%;
+    
+}
+.form-wrapper1 label {
+    width: 150px; /* Adjust the width as needed */
+    text-align: right;
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
 
-
-
-  
+  .form-wrapper1 input {
+    width: 50%; /* Adjust the width as needed */
+    margin-bottom: 10px; /* Adjust the margin as needed */
+  }
+  .submit_game{
+    background-color: rgb(0,42,78);
+    border: 2px solid rgb(0,42,78);
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 10px 20px; /* Add padding to make the button more visible */
+    width: auto; /* Allow the button's width to adjust to content */
+    min-width: 150px; /* Set a minimum width (adjust as needed) */
+    text-align: center; /* Center the text horizontally */
+    line-height: 1.5; 
+    border-radius: 15px;;
+    font-weight: bold;
+    display: block; /* Ensure the button is a block element */
+    margin: 0 auto; /* Set left and right margins to 'auto' to center horizontally */
+    margin-right: 11%;
+    
+}
+.sumbit_game:hover {
+    background-color: white; /* Change to the desired hover background color */
+    color: rgb(0,42,78); /* Change to the desired hover text color */
+}
+.sug_list{
+    color: rgb(0,42,78);
+    font-weight: bold;
+}
