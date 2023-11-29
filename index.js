@@ -277,30 +277,42 @@ app.get('/profile', isAuthenticated ,(req, res) => {
 
 app.get('/logout', isAuthenticated , async (req, res) => {
     const gameInteractions = stopTracking(); // Get game interactions
-    const userID = req.session.userID; // Get the user ID from the session
-    const dateTime = new Date().toISOString().replace('T', ' ').substring(0, 19); // Get the current date and time
+    const username = req.session.username; // Get the username from the session
+    
+    // Find the userID based on the username
+    const userSql = 'SELECT userID FROM users WHERE username = ?';
+    const userRows = await executeSQL(userSql, [username]);
+    
+    if (userRows && userRows.length > 0 && userRows[0].userID) {
+        const userID = userRows[0].userID;
+        
+        const dateTime = new Date().toISOString().replace('T', ' ').substring(0, 19); // Get the current date and time
 
-    for (const interaction of gameInteractions) {
-        try {
-            // Find the gameID based on the executable
-            const gameSql = 'SELECT gameID FROM game WHERE executable = ?';
-            const gameRows = await executeSQL(gameSql, [interaction.executable]);
-            if (gameRows && gameRows.length > 0 && gameRows[0].gameID) {
-                const gameID = gameRows[0].gameID;
-                console.log('Game ID:', gameID, 'for executable:', interaction.executable);
-
-                // Insert into game_interactions
-                const insertSql = 'INSERT INTO game_interaction (playtime, date, gameID, userID) VALUES (?, ?, ?, ?)';
-                await executeSQL(insertSql, [interaction.playtime, dateTime, gameID, userID]);
-                console.log('Inserted game interaction:', interaction, 'for user ID:', userID, 'at:', dateTime);
-            } else {
-                console.error(`No gameID found for executable: ${interaction.executable}`);
-                // Handle the case where no gameID was found
+        for (const interaction of gameInteractions) {
+            try {
+                // Find the gameID based on the executable
+                const gameSql = 'SELECT gameID FROM game WHERE executable = ?';
+                const gameRows = await executeSQL(gameSql, [interaction.executable]);
+                if (gameRows && gameRows.length > 0 && gameRows[0].gameID) {
+                    const gameID = gameRows[0].gameID;
+                    console.log('Game ID:', gameID, 'for executable:', interaction.executable);
+    
+                    // Insert into game_interactions
+                    const insertSql = 'INSERT INTO game_interaction (playtime, date, gameID, userID) VALUES (?, ?, ?, ?)';
+                    await executeSQL(insertSql, [interaction.playtime, dateTime, gameID, userID]);
+                    console.log('Inserted game interaction:', interaction, 'for username:', username, 'at:', dateTime);
+                } else {
+                    console.error(`No gameID found for executable: ${interaction.executable}`);
+                    // Handle the case where no gameID was found
+                }
+            } catch (error) {
+                console.error('Error processing game interaction for:', interaction.executable.toString(), error);
             }
-        } catch (error) {
-            console.error('Error processing game interaction for:', interaction.executable.toString(), error);
         }
+    } else {
+        console.error(`No userID found for username: ${userID}`);
     }
+
 
     req.session.destroy(); 
     res.redirect("/"); 
