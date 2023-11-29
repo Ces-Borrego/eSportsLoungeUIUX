@@ -11,6 +11,8 @@ const { startTracking, stopTracking } = require('./scripts/timeTracking.js');
 app.use(express.static(path.join(__dirname, 'css')));
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.static(path.join(__dirname, 'images')));
+
 app.set("view engine", "ejs");
 
 app.use(session({
@@ -91,12 +93,14 @@ app.post('/', async (req, res) => {
 
         req.session.authenticated = true; 
         req.session.username = rows[0].username;
+        req.session.userId = rows[0].userId;
         res.redirect("info");
     } 
     else if (passwordMatch && rows[0].admin == 1)
     {
         req.session.authenticated = true; 
         req.session.admin = 1;
+        req.session.username = rows[0].username;
         res.redirect("admin");
     }
     else {
@@ -105,6 +109,10 @@ app.post('/', async (req, res) => {
 });
 
 app.get('/admin', isAuthenticated , isAdmin,  async(req, res) => {
+
+    const userName = req.session.username;
+    const permission = req.session.admin; 
+
     try {
         // Retrieve game suggestions ordered by popularity
         const sql = `
@@ -118,7 +126,7 @@ app.get('/admin', isAuthenticated , isAdmin,  async(req, res) => {
         const successMessage = req.query.success; // Get the success message from the query parameter
 
         // Render the admin view and pass the popular game suggestions and success message to it
-        res.render('admin', { popularSuggestions, successMessage });
+        res.render('admin', { popularSuggestions, successMessage, userName, permission});
     } catch (error) {
         console.error('Error retrieving game suggestions:', error);
         // Handle the error, possibly redirect to an error page
@@ -131,11 +139,37 @@ app.get('/admin', isAuthenticated , isAdmin,  async(req, res) => {
  app.post('/admin', isAuthenticated, isAdmin, async (req, res) => {
     const { price, hours, cod } = req.body;
 
-    // Update the "info" data in the database
-    const updateInfoSql = 'UPDATE Info SET price = ?, hours = ?, cod = ? WHERE ID = 1';
+    let updateInfoSql = 'UPDATE Info SET ';
+    const updateParams = [];
+
+    if (price !== undefined && price.trim() !== '') {
+        updateInfoSql += 'price = ?, ';
+        updateParams.push(price);
+    }
+
+    if (hours !== undefined && hours.trim() !== '') {
+        updateInfoSql += 'hours = ?, ';
+        updateParams.push(hours);
+    }
+
+    if (cod !== undefined && cod.trim() !== '') {
+        updateInfoSql += 'cod = ?, ';
+        updateParams.push(cod);
+    }
+
+    // Check if any fields were provided for update
+    if (updateParams.length === 0) {
+        return res.redirect('/admin?success=No fields to update');
+    }
+
+    // Remove the trailing comma and space
+    updateInfoSql = updateInfoSql.slice(0, -2);
+
+    // Add a WHERE clause to specify which row to update
+    updateInfoSql += ' WHERE ID = 1';
 
     try {
-        await executeSQL(updateInfoSql, [price, hours, cod]);
+        await executeSQL(updateInfoSql, updateParams);
         // Redirect back to the admin page with a success message
         res.redirect('/admin?success=Info updated successfully');
     } catch (error) {
@@ -230,6 +264,7 @@ app.get('/info', isAuthenticated , async(req, res) => {
     // Define a variable and set it to "hello"
 
     const userName = req.session.username;
+    const isAdmin = req.session.admin === 1;
 
     let sql = 'SELECT * FROM Info';
     let infoData = await executeSQL(sql);
@@ -237,7 +272,7 @@ app.get('/info', isAuthenticated , async(req, res) => {
     let sql1 = 'SELECT * FROM game'
     let gameData = await executeSQL(sql1);
 
-    res.render('info', { infoData, gameData, userName });
+    res.render('info', { infoData, gameData, userName, isAdmin });
     
 
 });
@@ -268,11 +303,37 @@ app.get('/infoPublic', async(req, res) => {
     res.render('infoPublic', { infoData, gameData});
  });
 
-app.get('/profile', isAuthenticated ,(req, res) => {
+app.get('/profile', isAuthenticated ,async(req, res) => {
 
-     res.render("profile");
+    try {
+        const userId = req.session.userId;
+
+        // Fetch user interactions from the game_interaction table
+        const interactionsSql = `
+            SELECT gi.playtime, gi.date, g.name, g.img
+            FROM game_interaction gi
+            JOIN game g ON gi.gameID = g.gameID
+            WHERE gi.userID = ?
+            ORDER BY gi.date DESC;
+        `;
+        const interactions = await executeSQL(interactionsSql, [userId]);
+
+        // Calculate total playtime
+        const totalPlaytime = interactions.reduce((total, interaction) => total + interaction.playtime, 0);
+
+        // Find the game with the most playtime
+        const mostPlayedGame = interactions.reduce((max, interaction) => (interaction.playtime > max.playtime ? interaction : max), interactions[0]);
+
+         res.render('profile', { userName: req.session.username, interactions, totalPlaytime, mostPlayedGame });
+    } catch (error) {
+        console.error('Error fetching user interactions:', error);
+        // Handle the error, possibly redirect to an error page
+        res.status(500).send('Error fetching user interactions.');
+    }
 
  });
+
+
 
 
 app.get('/logout', isAuthenticated , async (req, res) => {
