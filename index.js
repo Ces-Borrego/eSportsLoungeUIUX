@@ -339,16 +339,17 @@ app.get('/profile', isAuthenticated ,async(req, res) => {
 app.get('/logout', isAuthenticated , async (req, res) => {
     const gameInteractions = stopTracking(); // Get game interactions
     const username = req.session.username; // Get the username from the session
+    const dateTime = new Date().toISOString().replace('T', ' ').substring(0, 19); // Get the current date and time
 
     // Query to get the userID from the database using the username
     const userSql = 'SELECT userID FROM users WHERE username = ?';
     const userRows = await executeSQL(userSql, [username]);
 
-    if (userRows && userRows.length > 0) {
+    if (userRows && userRows.length > 0 && userRows[0].userID) {
         const userID = userRows[0].userID;
 
         const dateTime = new Date().toISOString().replace('T', ' ').substring(0, 19); // Get the current date and time
-        
+    
         for (const interaction of gameInteractions) {
             try {
                 // Find the gameID based on the executable
@@ -370,9 +371,10 @@ app.get('/logout', isAuthenticated , async (req, res) => {
                 console.error('Error processing game interaction for:', interaction.executable.toString(), error);
             }
         }
-    } else {
-        console.error('No user found with username:', username);
+    } else { 
+        console.error(`No userID found for username: ${username}`);
     }
+
 
     req.session.destroy(); 
     res.redirect("/"); 
