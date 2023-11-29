@@ -3,39 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Page</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to an external CSS file (optional) -->
-    <!-- You can include additional meta tags, CSS, or JavaScript files here -->
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 </head>
-<body>
-    <header>
-        <h1>Welcome to My Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class = Infoback>
+    <nav class="navbar navbar-expand-lg  navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/Profile_Img.png" 
+                alt="Your Logo" style="max-width: 40px;">
+            </a>
+            <a class="navbar-brand custom-negative-margin" href="#">Welcome, <%= userName %>!</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse-navbar-collapse" id="navbarNavAltMarkup" >
+                <div class="navbar-nav ml-auto">
+                    <a class="custom_button2" href="/info">Home</a>
+                    <a class="custom_button2" href="/logout">Sign Out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
     
-    <main>
-        <section>
-            <h2>About Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit....</p>
-        </section>
-        
-        <section>
-            <h2>Our Services</h2>
-            <ul>
-                <li>Service 1</li>
-                <li>Service 2</li>
-                <li>Service 3</li>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Image on the left -->
+                <img src="/Profile_Img.png" alt="Your Image" class="img-fluid" id="Profile_logo">
+            </div>
+            <div class="col-md-9">
+                <!-- Text on the right -->
+                <% const playtimeInHours1 = totalPlaytime / 60; %>
+                <h4 class="totaltimeplayed">Total Time Played: <%= playtimeInHours1.toFixed(2) %> Mins</h4>
+                <% if (mostPlayedGame && mostPlayedGame.name) { %>
+                    <h4 class="MostPlayedGame">Most Played Game: <%= mostPlayedGame.name %></h4>
+                <% } else { %>
+                    <h4 class="MostPlayedGame">No Games Played</h4>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <hr class="my-4">
+    <h1 class="Banner">
+        Games</h1>
+        <div class="container mt-5 pt-5">
+            <ul class="game-list">
+                <% for (let i = 0; i < interactions.length; i++) { %>
+                    <li class="game-item <%= i % 2 === 0 ? 'even' : 'odd' %>">
+                        <img src="<%= interactions[i].img %>" class="image">
+                        <div class="text">
+                            <h4 class = "profile_games_text">Game: <%= interactions[i].name %></h4>
+                            <% const playtimeInHours = interactions[i].playtime / 60; %>
+                            <h4 class = "profile_games_text">Time Played: <%= playtimeInHours.toFixed(2)%> Mins</h4>
+                        </div>
+                    </li>
+                <% } %>
             </ul>
-        </section>
-    </main>
-    
+        </div>
+    <br> 
+    <br> 
     <footer>
         <p>&copy; 2023 My Website</p>
     </footer>
