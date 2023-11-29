@@ -46,6 +46,11 @@ async function startTracking(gamesToMonitor) {
 function stopTracking() {
     console.log('Monitoring stopped...');
     isTracking = false; // Signal to stop tracking
+
+    // Filter and map the gameRuntime object to an array of interactions
+    return Object.entries(gameRuntime)
+        .filter(([game, runtime]) => runtime > 0)
+        .map(([game, runtime]) => ({ executable: game, playtime: runtime }));
 }
 
 module.exports = { startTracking, stopTracking };
