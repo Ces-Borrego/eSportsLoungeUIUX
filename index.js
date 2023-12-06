@@ -179,13 +179,13 @@ app.get('/admin', isAuthenticated , isAdmin,  async(req, res) => {
     }
 });
 app.post('/admin/addGame', isAuthenticated, isAdmin, async (req, res) => {
-    const { name, desc, img, genre } = req.body;
+    const { name, desc, img, genre, executable} = req.body;
 
     // Insert the new game into the "game" table
-    const insertGameSql = 'INSERT INTO game (name, `desc`, img, genre) VALUES (?, ?, ?, ?)';
+    const insertGameSql = 'INSERT INTO game (name, `desc`, img, genre, executable) VALUES (?, ?, ?, ?, ?)';
 
     try {
-        await executeSQL(insertGameSql, [name, desc, img, genre]);
+        await executeSQL(insertGameSql, [name, desc, img, genre, executable]);
         // Redirect back to the admin page with a success message
         res.redirect('/admin?success=Game added successfully');
     } catch (error) {
@@ -310,21 +310,24 @@ app.get('/profile', isAuthenticated ,async(req, res) => {
 
         // Fetch user interactions from the game_interaction table
         const interactionsSql = `
-            SELECT gi.playtime, gi.date, g.name, g.img
+            SELECT g.gameID, g.name, g.img, SUM(gi.playtime) as totalPlaytime
             FROM game_interaction gi
             JOIN game g ON gi.gameID = g.gameID
             WHERE gi.userID = ?
-            ORDER BY gi.date DESC;
+            GROUP BY g.gameID, g.name, g.img
+            ORDER BY totalPlaytime DESC;
         `;
         const interactions = await executeSQL(interactionsSql, [userId]);
 
         // Calculate total playtime
-        const totalPlaytime = interactions.reduce((total, interaction) => total + interaction.playtime, 0);
+        const totalPlaytime = interactions.reduce((total, interaction) => total + interaction.totalPlaytime, 0);
 
         // Find the game with the most playtime
-        const mostPlayedGame = interactions.reduce((max, interaction) => (interaction.playtime > max.playtime ? interaction : max), interactions[0]);
+        const mostPlayedGame = interactions.length > 0
+            ? interactions.reduce((max, interaction) => (interaction.totalPlaytime > max.totalPlaytime ? interaction : max), interactions[0])
+            : null;
 
-         res.render('profile', { userName: req.session.username, interactions, totalPlaytime, mostPlayedGame });
+        res.render('profile', { userName: req.session.username, interactions, totalPlaytime, mostPlayedGame });
     } catch (error) {
         console.error('Error fetching user interactions:', error);
         // Handle the error, possibly redirect to an error page

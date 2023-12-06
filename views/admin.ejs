@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Page</title>
+    <title>Admin</title>
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
 
 </head>
 <body class = Infoback>
@@ -86,13 +89,22 @@
       
               <label class = "admin_text" for="genre">Genre:</label>
               <input type="text" id="genre" name="genre" required><br>
-              <br>
+        
+              <label class = "admin_text" for="exexutable">Executable:</label>
+              <input type="text" id="executable" name="executable" required><br>
+        
               <button class="submit_game" type="submit">Add Game</button>
               <% if (successMessage) { %>
                   <div class="success-message_update_info">
                       <p><%= successMessage %></p>
                   </div>
               <% } %>
+              <br>
+  
+              <button type="button" class="Executable" data-toggle="modal" data-target="#executableModal">
+                    Executable?
+              </button>
+          
           </form>
         </div>
         <br>
@@ -125,6 +137,82 @@
         </div>
         
 
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="executableModal" tabindex="-1" role="dialog" aria-labelledby="executableModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="executableModalLabel">Executable Instructions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add your detailed instructions here -->
+                    <p><strong>Instructions for Administrators to Insert Executable Names into the Database on Windows</strong></p>
+
+                    <ol>
+                        <li><strong>Finding the Executable Name</strong>
+                            <ol type="a">
+                                <li><strong>Method 1: Using the Application Shortcut</strong>
+                                    <ul>
+                                        <li>Identify the Application: Determine which application or game's executable name you need to find.</li>
+                                        <li><strong>Locate the Application Shortcut:</strong>
+                                            <ul>
+                                                <li>Find a shortcut for the application or game, typically on the desktop or in the Start Menu.</li>
+                                                <li><strong>View Shortcut Details:</strong>
+                                                    <ul>
+                                                        <li>Right-click on the shortcut and select "Properties".</li>
+                                                        <li>In the Properties window, look for the "Target" field which shows the path to the executable file.</li>
+                                                        <li>Note the name of the executable file (e.g., examplegame), excluding the file extension (.exe).</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Method 2: Using Task Manager</strong>
+                                    <ul>
+                                        <li>Start the Game: Open the game you want to find the executable name for.</li>
+                                        <li><strong>Open Task Manager:</strong>
+                                            <ul>
+                                                <li>Press Ctrl + Shift + Esc to open the Task Manager directly, or</li>
+                                                <li>Right-click the taskbar and select "Task Manager".</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Find the Application in the Task Manager:</strong>
+                                            <ul>
+                                                <li>Go to the "Processes" tab.</li>
+                                                <li>Look for your game in the list. It might be listed by its user-friendly name rather than the executable name.</li>
+                                                <li><strong>View the Executable Name:</strong>
+                                                    <ul>
+                                                        <li>Right-click on the application or game in the list and choose “Open File Location”. This will take you to the folder where the executable is located.</li>
+                                                        <li>The name of the executable file (ending with ".exe") highlighted in the folder is the one you're looking for.</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </li>
+                        
+                        <li><strong>Additional Notes:</strong>
+                            <ul>
+                                <li><strong>Accuracy is Essential:</strong> Ensure that the executable name is spelled correctly and is accurate, as it will be used for tracking.</li>
+                                <li><strong>Security Practices:</strong> Always adhere to security protocols, especially when making database changes.</li>
+                                <li><strong>Record-Keeping:</strong> Maintain a log of all executable names added for future reference and management.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
       </div>
     
     

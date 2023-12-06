@@ -69,9 +69,12 @@
                     <li class="game-item <%= i % 2 === 0 ? 'even' : 'odd' %>">
                         <img src="<%= interactions[i].img %>" class="image">
                         <div class="text">
-                            <h4 class = "profile_games_text">Game: <%= interactions[i].name %></h4>
-                            <% const playtimeInHours = interactions[i].playtime / 60; %>
-                            <h4 class = "profile_games_text">Time Played: <%= playtimeInHours.toFixed(2)%> Mins</h4>
+                            <h4 class="profile_games_text">Game: <%= interactions[i].name %></h4>
+                            <% const totalPlaytimeInMinutes = Math.floor(interactions[i].totalPlaytime / 60);
+                            const totalPlaytimeInSeconds = interactions[i].totalPlaytime % 60; %>
+                            <h4 class="profile_games_text">
+                                Time Played: <%= totalPlaytimeInMinutes %> mins <%= totalPlaytimeInSeconds %> secs
+                            </h4>
                         </div>
                     </li>
                 <% } %>
@@ -80,7 +83,7 @@
     <br> 
     <br> 
     <footer>
-        <p>&copy; 2023 My Website</p>
+        <p>&copy; CSUMB</p>
     </footer>
 </body>
 </html>
